@@ -1,5 +1,9 @@
 function App() {
-  return <div className="bg-gray-800 text-white p-4">test</div>;
+  return (
+    <div>
+      <h1>Hello World</h1> <button className="btn btn-accent">Click Me</button>
+    </div>
+  );
 }
 
 export default App;
