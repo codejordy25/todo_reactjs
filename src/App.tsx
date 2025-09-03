@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Priority = "Urgente" | "Moyenne" | "Forte";
 
@@ -15,9 +15,15 @@ function App() {
   // Charger les todos depuis le localStorage au démarrage
   const savedTodos = localStorage.getItem("todos");
   const initialTodos = savedTodos ? JSON.parse(savedTodos) : [];
+  const [filter, setFilter] = useState<Priority | "Tous">("Tous");
 
   //il verifie si il ya saveTodos et le passe a InitialTodos
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
+
+  //Mette à jour la liste des todos dans le localStorage
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   function handleAddTodo() {
     if (input.trim() === "") {
@@ -33,6 +39,14 @@ function App() {
     // setTodos([...todos, newTodo]);
     setInput("");
     setPriority("Moyenne");
+  }
+
+  let filteredTodos: Todo[] = [];
+
+  if (filter === "Tous") {
+    filteredTodos = todos;
+  } else {
+    filteredTodos = todos.filter((todo) => todo.priority === filter);
   }
 
   return (
@@ -60,6 +74,19 @@ function App() {
           <button className="btn btn-primary" onClick={handleAddTodo}>
             Ajouter
           </button>
+        </div>
+        <div className="space-y-2 flex-1 h-fit">
+          <div className="flex flex-wrap gap-4">
+            <button
+              className={`btn btn-soft ${
+                filter === "Tous" ? "btn-primary" : ""
+              }`}
+              //On ne peux pas faire passer une fonction set dans onClick
+              onClick={() => setFilter("Tous")}
+            >
+              Tous
+            </button>
+          </div>
         </div>
       </div>
     </div>
