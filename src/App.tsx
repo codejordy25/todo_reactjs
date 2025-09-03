@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import TodoItem from "./TodoItem";
 
-type Priority = "Urgente" | "Moyenne" | "Forte";
+type Priority = "Urgente" | "Moyenne" | "Basse";
 
 type Todo = {
   id: number;
@@ -49,6 +50,11 @@ function App() {
     filteredTodos = todos.filter((todo) => todo.priority === filter);
   }
 
+  const urgentCount = todos.filter((t) => t.priority === "Urgente").length;
+  const mediumCount = todos.filter((t) => t.priority === "Moyenne").length;
+  const lowCount = todos.filter((t) => t.priority === "Basse").length;
+  const totalCount = todos.length;
+
   return (
     <div className="flex justify-center">
       {" "}
@@ -84,9 +90,50 @@ function App() {
               //On ne peux pas faire passer une fonction set dans onClick
               onClick={() => setFilter("Tous")}
             >
-              Tous
+              Tous({totalCount})
+            </button>
+
+            <button
+              className={`btn btn-soft ${
+                filter === "Urgente" ? "btn-primary" : ""
+              }`}
+              //On ne peux pas faire passer une fonction set dans onClick
+              onClick={() => setFilter("Urgente")}
+            >
+              Urgente({urgentCount})
+            </button>
+
+            <button
+              className={`btn btn-soft ${
+                filter === "Moyenne" ? "btn-primary" : ""
+              }`}
+              //On ne peux pas faire passer une fonction set dans onClick
+              onClick={() => setFilter("Moyenne")}
+            >
+              Moyenne({mediumCount})
+            </button>
+
+            <button
+              className={`btn btn-soft ${
+                filter === "Basse" ? "btn-primary" : ""
+              }`}
+              //On ne peux pas faire passer une fonction set dans onClick
+              onClick={() => setFilter("Basse")}
+            >
+              Basse({lowCount})
             </button>
           </div>
+          {filteredTodos.length > 0 ? (
+            <ul className="divide-y divide-primary/20">
+              {filteredTodos.map((todo) => (
+                <li key={todo.id}>
+                  <TodoItem todo={todo} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>Aucune tâche à afficher</div>
+          )}
         </div>
       </div>
     </div>
