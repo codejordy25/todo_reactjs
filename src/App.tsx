@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
+import { Construction } from "lucide-react";
 
 type Priority = "Urgente" | "Moyenne" | "Basse";
 
@@ -137,7 +138,17 @@ function App() {
               ))}
             </ul>
           ) : (
-            <div>Aucune tâche à afficher</div>
+            <div className=" flex justify-center items-center flex-col p-5">
+              <div>
+                <Construction
+                  strokeWidth={1}
+                  className="w-40 h-40 text-primary"
+                />
+              </div>
+              <div className="text-sm">
+                <p>Aucune tâche pour ce filtre</p>
+              </div>
+            </div>
           )}
         </div>
       </div>
