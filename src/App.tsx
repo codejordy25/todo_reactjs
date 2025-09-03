@@ -11,7 +11,13 @@ type Todo = {
 function App() {
   const [input, setInput] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("Moyenne");
-  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // Charger les todos depuis le localStorage au démarrage
+  const savedTodos = localStorage.getItem("todos");
+  const initialTodos = savedTodos ? JSON.parse(savedTodos) : [];
+
+  //il verifie si il ya saveTodos et le passe a InitialTodos
+  const [todos, setTodos] = useState<Todo[]>(initialTodos);
 
   function handleAddTodo() {
     if (input.trim() === "") {
