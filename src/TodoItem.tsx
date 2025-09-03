@@ -10,9 +10,10 @@ type Todo = {
 
 type Props = {
   todo: Todo;
+  onDeleteTodo: (id: number) => void;
 };
 
-const TodoItem = ({ todo }: Props) => {
+const TodoItem = ({ todo, onDeleteTodo }: Props) => {
   return (
     <li className="p-3">
       <div className="flex justify-between items-center">
@@ -37,7 +38,10 @@ const TodoItem = ({ todo }: Props) => {
             {todo.priority}
           </span>
         </div>
-        <button className="btn btn-sm btn-error btn-soft">
+        <button
+          className="btn btn-sm btn-error btn-soft"
+          onClick={() => onDeleteTodo(todo.id)}
+        >
           <Trash className="w-4 h-4" />
         </button>
       </div>

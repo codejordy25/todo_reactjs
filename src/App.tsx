@@ -55,6 +55,11 @@ function App() {
   const lowCount = todos.filter((t) => t.priority === "Basse").length;
   const totalCount = todos.length;
 
+  function handleDeleteTodo(id: number) {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  }
+
   return (
     <div className="flex justify-center">
       {" "}
@@ -127,7 +132,7 @@ function App() {
             <ul className="divide-y divide-primary/20">
               {filteredTodos.map((todo) => (
                 <li key={todo.id}>
-                  <TodoItem todo={todo} />
+                  <TodoItem todo={todo} onDeleteTodo={handleDeleteTodo} />
                 </li>
               ))}
             </ul>
